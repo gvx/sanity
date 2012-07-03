@@ -88,6 +88,7 @@ def pos_sub(a: P > P('b'), b):
     return a - b
 ```
 
+```python
 @sane
 def fork(lst: P.__len__() % 2 == 0) -> (P.__len__() == 2 and
         P[0].__len__() == P[1].__len__()):
