@@ -41,8 +41,10 @@ pretty advanced conditions.
 
 ```python
 @sane
-def fork(lst: P.__len__() % 2 == 0):
+def fork(lst: Len(P) % 2 == 0):
+    # notice capital letter
     # we can't use len(P) because len() wants to return an int
+    # so sanity provides a function Len(t) which simply returns t.__len__()
     return lst[::2], lst[1::2]
 
 print(fork([1, 2, 3, 4]))
@@ -90,8 +92,7 @@ def pos_sub(a: P > P('b'), b):
 
 ```python
 @sane
-def fork(lst: P.__len__() % 2 == 0) -> (P.__len__() == 2 and
-        P[0].__len__() == P[1].__len__()):
+def fork(lst: Len(P) % 2 == 0) -> Len(P) == 2 and Len(P[0]) == Len(P[1]):
     return lst[::2], lst[1::2]
 ```
 

@@ -102,6 +102,9 @@ class Predicate(object):
 
 P = Predicate()
 
+def Len(t):
+	return t.__len__()
+
 @decorator
 def sane(f):
     c = f.__code__

@@ -42,7 +42,7 @@ print(a1(10, 5))
 #print(a1(5, 10))
 
 @sane
-def a2(a: P[0][0].__len__() > 2):
+def a2(a: Len(P[0][0]) > 2):
     return a[0][0][2]
 
 print(a2([[[1, 2, 4]]]))
