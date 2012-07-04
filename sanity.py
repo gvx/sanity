@@ -103,13 +103,13 @@ class Predicate(object):
 P = Predicate()
 
 def Len(t):
-	return t.__len__()
-	
+    return t.__len__()
+
 def Int(t):
-	return t.__int__()
+    return t.__int__()
 
 def Float(t):
-	return t.__float__()
+    return t.__float__()
 
 @decorator
 def sane(f):
