@@ -21,48 +21,108 @@ class Predicate(metaclass=PredicateMeta):
     # fancy magic
     # it's all very simple once you've dissected one of them
     def __lt__(self, other):
+        if isinstance(other, Predicate):
+            n = len(self.which_args)
+            return Predicate(lambda *x: self.fun(x[:n]) < other.fun(x[n:]), '({}) < ({})'.format(self.repr, other.repr), self.which_args + other.which_args)
         return Predicate(lambda x: self.fun(x) < other, '({}) < {}'.format(self.repr, repr(other)), self.which_args)
     def __gt__(self, other):
+        if isinstance(other, Predicate):
+            n = len(self.which_args)
+            return Predicate(lambda *x: self.fun(x[:n]) > other.fun(x[n:]), '({}) > ({})'.format(self.repr, other.repr), self.which_args + other.which_args)
         return Predicate(lambda x: self.fun(x) > other, '({}) > {}'.format(self.repr, repr(other)), self.which_args)
     def __le__(self, other):
+        if isinstance(other, Predicate):
+            n = len(self.which_args)
+            return Predicate(lambda *x: self.fun(x[:n]) <= other.fun(x[n:]), '({}) <= ({})'.format(self.repr, other.repr), self.which_args + other.which_args)
         return Predicate(lambda x: self.fun(x) <= other, '({}) <= {}'.format(self.repr, repr(other)), self.which_args)
     def __ge__(self, other):
+        if isinstance(other, Predicate):
+            n = len(self.which_args)
+            return Predicate(lambda *x: self.fun(x[:n]) >= other.fun(x[n:]), '({}) >= ({})'.format(self.repr, other.repr), self.which_args + other.which_args)
         return Predicate(lambda x: self.fun(x) >= other, '({}) >= {}'.format(self.repr, repr(other)), self.which_args)
     def __eq__(self, other):
+        if isinstance(other, Predicate):
+            n = len(self.which_args)
+            return Predicate(lambda *x: self.fun(x[:n]) == other.fun(x[n:]), '({}) == ({})'.format(self.repr, other.repr), self.which_args + other.which_args)
         return Predicate(lambda x: self.fun(x) == other, '({}) == {}'.format(self.repr, repr(other)), self.which_args)
     def __ne__(self, other):
+        if isinstance(other, Predicate):
+            n = len(self.which_args)
+            return Predicate(lambda *x: self.fun(x[:n]) != other.fun(x[n:]), '({}) != ({})'.format(self.repr, other.repr), self.which_args + other.which_args)
         return Predicate(lambda x: self.fun(x) != other, '({}) != {}'.format(self.repr, repr(other)), self.which_args)
     def __getattr__(self, attr):
         return Predicate(lambda x: getattr(self.fun(x), attr), '({}).{}'.format(self.repr, attr), self.which_args)
     def __getitem__(self, item):
+        if isinstance(item, Predicate):
+            n = len(self.which_args)
+            return Predicate(lambda *x: self.fun(x[:n])[item.fun(x[n:])], '({})[{}]'.format(self.repr, item.repr), self.which_args + item.which_args)
         return Predicate(lambda x: self.fun(x)[item], '({})[{}]'.format(self.repr, repr(item)), self.which_args)
     def __len__(self):
         return Predicate(lambda x: len(self.fun(x)), 'len({})'.format(self.repr,), self.which_args)
     def __add__(self, other):
+        if isinstance(other, Predicate):
+            n = len(self.which_args)
+            return Predicate(lambda *x: self.fun(x[:n]) + other.fun(x[n:]), '({}) + ({})'.format(self.repr, other.repr), self.which_args + other.which_args)
         return Predicate(lambda x: self.fun(x) + other, '({}) + {}'.format(self.repr, repr(other)), self.which_args)
     def __sub__(self, other):
+        if isinstance(other, Predicate):
+            n = len(self.which_args)
+            return Predicate(lambda *x: self.fun(x[:n]) - other.fun(x[n:]), '({}) - ({})'.format(self.repr, other.repr), self.which_args + other.which_args)
         return Predicate(lambda x: self.fun(x) - other, '({}) - {}'.format(self.repr, repr(other)), self.which_args)
     def __mul__(self, other):
+        if isinstance(other, Predicate):
+            n = len(self.which_args)
+            return Predicate(lambda *x: self.fun(x[:n]) * other.fun(x[n:]), '({}) * ({})'.format(self.repr, other.repr), self.which_args + other.which_args)
         return Predicate(lambda x: self.fun(x) * other, '({}) * {}'.format(self.repr, repr(other)), self.which_args)
     def __truediv__(self, other):
+        if isinstance(other, Predicate):
+            n = len(self.which_args)
+            return Predicate(lambda *x: self.fun(x[:n]) / other.fun(x[n:]), '({}) / ({})'.format(self.repr, other.repr), self.which_args + other.which_args)
         return Predicate(lambda x: self.fun(x) / other, '({}) / {}'.format(self.repr, repr(other)), self.which_args)
     def __floordiv__(self, other):
+        if isinstance(other, Predicate):
+            n = len(self.which_args)
+            return Predicate(lambda *x: self.fun(x[:n]) // other.fun(x[n:]), '({}) // ({})'.format(self.repr, other.repr), self.which_args + other.which_args)
         return Predicate(lambda x: self.fun(x) // other, '({}) // {}'.format(self.repr, repr(other)), self.which_args)
     def __mod__(self, other):
+        if isinstance(other, Predicate):
+            n = len(self.which_args)
+            return Predicate(lambda *x: self.fun(x[:n]) % other.fun(x[n:]), '({}) % ({})'.format(self.repr, other.repr), self.which_args + other.which_args)
         return Predicate(lambda x: self.fun(x) % other, '({}) % {}'.format(self.repr, repr(other)), self.which_args)
     def __divmod__(self, other):
+        if isinstance(other, Predicate):
+            n = len(self.which_args)
+            return Predicate(lambda x: divmod(self.fun(x[:n]), other.fun(x[n:])), 'divmod(({}), ({}))'.format(self.repr, other.repr), self.which_args + other.which_args)
         return Predicate(lambda x: divmod(self.fun(x), other), 'divmod(({}), {})'.format(self.repr, repr(other)), self.which_args)
     def __pow__(self, other):
+        if isinstance(other, Predicate):
+            n = len(self.which_args)
+            return Predicate(lambda *x: self.fun(x[:n]) ** other.fun(x[n:]), '({}) ** ({})'.format(self.repr, other.repr), self.which_args + other.which_args)
         return Predicate(lambda x: self.fun(x) ** other, '({}) ** {}'.format(self.repr, repr(other)), self.which_args)
     def __lshift__(self, other):
+        if isinstance(other, Predicate):
+            n = len(self.which_args)
+            return Predicate(lambda *x: self.fun(x[:n]) << other.fun(x[n:]), '({}) << ({})'.format(self.repr, other.repr), self.which_args + other.which_args)
         return Predicate(lambda x: self.fun(x) << other, '({}) << {}'.format(self.repr, repr(other)), self.which_args)
     def __rshift__(self, other):
+        if isinstance(other, Predicate):
+            n = len(self.which_args)
+            return Predicate(lambda *x: self.fun(x[:n]) >> other.fun(x[n:]), '({}) >> ({})'.format(self.repr, other.repr), self.which_args + other.which_args)
         return Predicate(lambda x: self.fun(x) >> other, '({}) >> {}'.format(self.repr, repr(other)), self.which_args)
     def __and__(self, other):
+        if isinstance(other, Predicate):
+            n = len(self.which_args)
+            return Predicate(lambda *x: self.fun(x[:n]) & other.fun(x[n:]), '({}) & ({})'.format(self.repr, other.repr), self.which_args + other.which_args)
         return Predicate(lambda x: self.fun(x) & other, '({}) & {}'.format(self.repr, repr(other)), self.which_args)
     def __xor__(self, other):
+        if isinstance(other, Predicate):
+            n = len(self.which_args)
+            return Predicate(lambda *x: self.fun(x[:n]) ^ other.fun(x[n:]), '({}) ^ ({})'.format(self.repr, other.repr), self.which_args + other.which_args)
         return Predicate(lambda x: self.fun(x) ^ other, '({}) ^ {}'.format(self.repr, repr(other)), self.which_args)
     def __or__(self, other):
+        if isinstance(other, Predicate):
+            n = len(self.which_args)
+            return Predicate(lambda *x: self.fun(x[:n]) | other.fun(x[n:]), '({}) | ({})'.format(self.repr, other.repr), self.which_args + other.which_args)
         return Predicate(lambda x: self.fun(x) | other, '({}) | {}'.format(self.repr, repr(other)), self.which_args)
     def __radd__(self, other):
         return Predicate(lambda x: other + self.fun(x), '{} + ({})'.format(repr(other), self.repr), self.which_args)

@@ -81,3 +81,17 @@ def a6(x: P != "Hi"):
 
 print(a6("Yay"))
 #print(a6("Hi"))
+
+@sane
+def a7(x: _.x > _.y, y):
+	return x - y
+
+print(a7(10, 5))
+#print(a7(5, 10))
+
+@sane
+def a8(x) -> P > _.x:
+	return x * 10
+
+print(a8(2))
+#print(a8(0))
