@@ -8,6 +8,8 @@ from sanity import *
 
 print (P)
 
+_ = Predicate
+
 a = {'dict': 'Yo'}
 b = {'dict': 'Ya'}
 
@@ -63,3 +65,10 @@ def a4(*q, **kw: P['foo'] != 0):
 
 print(a4(foo=2, hi=9001))
 #print(a4(foo=0, hi=9001))
+
+@sane
+def a5(a: _.a < 0):
+	return -a
+
+print(a5(-10))
+print(a5(10))
