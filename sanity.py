@@ -1,5 +1,7 @@
 from functools import update_wrapper
 
+__all__ = ['Predicate', 'P', 'sane', 'Len', 'Int', 'Float']
+
 decorator = (lambda f: f(f))(lambda d: lambda fn: update_wrapper(d(fn), fn))
 
 class Predicate(object):
