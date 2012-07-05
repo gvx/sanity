@@ -14,7 +14,7 @@ class PredicateMeta(type):
 class Predicate(metaclass=PredicateMeta):
     def __init__(self, fun=lambda x: x, repr=None, which_args=(None,)):
         self.fun = fun
-        self.repr = '{}' if repr is None else repr
+        self.repr = '{!r}' if repr is None else repr
         self.which_args = which_args
     def __repr__(self):
         return self.repr
@@ -127,11 +127,16 @@ def sane(f):
     def _s(*args, **kwargs):
         arguments = getcallargs(f, *args, **kwargs)
         for name, arg in arguments.items():
-            if name in ann and not ann[name].fun(arg):
-                raise ValueError('precondition {} failed'.format(ann[name].repr.format(repr(arg))))
+            if name in ann:
+                pred = ann[name]
+                passed = [arguments[name if alt is None else alt] for alt in pred.which_args]
+                if not pred.fun(*passed):
+                    raise ValueError('precondition {} failed'.format(pred.repr.format(*passed)))
         ret = f(*args, **kwargs)
         if 'return' in ann:
-            if not ann['return'].fun(ret):
-                raise ValueError('postcondition {} failed'.format(ann['return'].repr.format(repr(ret))))
+            pred = ann['return']
+            passed = [ret if alt is None else arguments[alt] for alt in pred.which_args]
+            if not pred.fun(*passed):
+                raise ValueError('postcondition {} failed'.format(pred.repr.format(*passed)))
         return ret
     return _s

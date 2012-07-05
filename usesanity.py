@@ -67,8 +67,17 @@ print(a4(foo=2, hi=9001))
 #print(a4(foo=0, hi=9001))
 
 @sane
-def a5(a: _.a < 0):
+def a5(a: _.a < 0, b: _.a > -100 =None):
 	return -a
 
 print(a5(-10))
-print(a5(10))
+#print(a5(10))
+#print(a5(-100))
+
+
+@sane
+def a6(x: P != "Hi"):
+	return x
+
+print(a6("Yay"))
+#print(a6("Hi"))
