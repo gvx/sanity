@@ -73,11 +73,18 @@ print(Person().grandparent())
 # ValueError: precondition ((someone).parent) != None failed
 ```
 
+```python
+@sane
+def tail(*args: Len(P) > 0):
+    return args[1:]
+
+print(tail(10, 11, 12))
+# prints (11, 12)
+print(tail())
+# ValueError: precondition (len(())) > 0 failed
+```
+
 # Future work
-
-## Varargs
-
-Sanity can't currently handle `*args` or `**kwargs`, so that's scheduled.
 
 ## Multiple predicates
 
