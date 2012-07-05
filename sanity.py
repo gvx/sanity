@@ -1,4 +1,5 @@
 from functools import update_wrapper
+from inspect import getcallargs
 
 __all__ = ['Predicate', 'P', 'sane', 'Len', 'Int', 'Float']
 
@@ -115,15 +116,11 @@ def Float(t):
 
 @decorator
 def sane(f):
-    c = f.__code__
     ann = f.__annotations__
     def _s(*args, **kwargs):
-        for i, arg in enumerate(args):
-            name = c.co_varnames[i]
+        arguments = getcallargs(f, *args, **kwargs)
+        for name, arg in arguments.items():
             if name in ann and not ann[name].fun(arg):
-                raise ValueError('precondition {} failed'.format(ann[name].repr.format(repr(arg))))
-        for name, arg in kwargs.items():
-            if name in ann and not ann[name].fun(g(arg, name)):
                 raise ValueError('precondition {} failed'.format(ann[name].repr.format(repr(arg))))
         ret = f(*args, **kwargs)
         if 'return' in ann:

@@ -48,3 +48,18 @@ def a2(a: Len(P[0][0]) > 2):
 print(a2([[[1, 2, 4]]]))
 #print(a2([[[1, 2]]]))
 
+@sane
+def a3(*k: Len(P) == 3):
+	return k
+
+print(a3(1, 2, 3))
+#print(a3(1, 2))
+#print(a3(1, 2, 3, 4))
+#print(a3(1, 2, 3, 4, 5)) # right out
+
+@sane
+def a4(*q, **kw: P['foo'] != 0):
+	return kw['foo']
+
+print(a4(foo=2, hi=9001))
+#print(a4(foo=0, hi=9001))
