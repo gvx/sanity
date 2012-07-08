@@ -102,3 +102,17 @@ def a9(x: Len(P([1, 2, 3])) == P):
 
 print(a9(3))
 #print(a9(2))
+
+@sane
+def a10(x: Contains(P, 'hi')):
+	return x.index('hi')
+
+print(a10(['yo', 'hi']))
+#print(a10(['yo', 'ho']))
+
+@sane
+def a11(x: Contains(P(range(10)), P)):
+	return x
+
+print(a11(8))
+#print(a11(11))

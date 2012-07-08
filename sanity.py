@@ -1,7 +1,7 @@
 from functools import update_wrapper
 from inspect import getcallargs
 
-__all__ = ['Predicate', 'P', 'sane', 'Len', 'Int', 'Float', 'Any', 'All']
+__all__ = ['Predicate', 'P', 'sane', 'Len', 'Int', 'Float', 'Any', 'All', 'Contains']
 
 decorator = (lambda f: f(f))(lambda d: lambda fn: update_wrapper(d(fn), fn))
 
@@ -169,6 +169,11 @@ class Predicate(metaclass=PredicateMeta):
             return Predicate(lambda x: round(self.fun(x)), 'round({})'.format(self.repr,), self.which_args)
         else:
             return Predicate(lambda x: round(self.fun(x), n), 'round({}, n={})'.format(self.repr, repr(n)), self.which_args)
+    def __contains__(self, other):
+        if isinstance(other, Predicate):
+            n = len(self.which_args)
+            return Predicate(lambda x: other.fun(x[n:]) in self.fun(x[:n]), '({}) in ({})'.format(other.repr, self.repr), self.which_args + other.which_args)
+        return Predicate(lambda x: other in self.fun(x), '{} in ({})'.format(repr(other), self.repr), self.which_args)
     def __call__(self, instead):
         return Predicate(lambda x: instead, repr(instead))
 
@@ -202,6 +207,9 @@ def All(*t):
             s + len(i.which_args)
         return True
     return Predicate(ifall, 'all({})'.format(', '.join(i.repr for i in t)))
+
+def Contains(container, item):
+    return container.__contains__(item)
 
 @decorator
 def sane(f):
