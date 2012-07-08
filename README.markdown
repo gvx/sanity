@@ -93,7 +93,7 @@ def pos_sub(a: P > Predicate.b, b):
 
 ```python
 @sane
-def fork(lst: Len(P) % 2 == 0) -> Len(P) == 2 and Len(P[0]) == Len(P[1]):
+def fork(lst: Len(P) % 2 == 0) -> (Len(P) == 2) & (Len(P[0]) == Len(P[1])):
     return lst[::2], lst[1::2]
 ```
 
