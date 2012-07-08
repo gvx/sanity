@@ -1,7 +1,7 @@
 from functools import update_wrapper
 from inspect import getcallargs
 
-__all__ = ['Predicate', 'P', 'sane', 'Len', 'Int', 'Float']
+__all__ = ['Predicate', 'P', 'sane', 'Len', 'Int', 'Float', 'Any', 'All']
 
 decorator = (lambda f: f(f))(lambda d: lambda fn: update_wrapper(d(fn), fn))
 
@@ -180,6 +180,26 @@ def Int(t):
 
 def Float(t):
     return t.__float__()
+
+def Any(*t):
+    def ifany(x):
+        s = 0
+        for i in t:
+            if i.fun(x[s:s + len(i.which_args)]):
+                return True
+            s + len(i.which_args)
+        return False
+    return Predicate(ifany, 'any({})'.format(', '.join(i.repr for i in t)))
+
+def All(*t):
+    def ifall(x):
+        s = 0
+        for i in t:
+            if not i.fun(x[s:s + len(i.which_args)]):
+                return False
+            s + len(i.which_args)
+        return True
+    return Predicate(ifall, 'all({})'.format(', '.join(i.repr for i in t)))
 
 @decorator
 def sane(f):
