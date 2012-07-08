@@ -169,6 +169,8 @@ class Predicate(metaclass=PredicateMeta):
             return Predicate(lambda x: round(self.fun(x)), 'round({})'.format(self.repr,), self.which_args)
         else:
             return Predicate(lambda x: round(self.fun(x), n), 'round({}, n={})'.format(self.repr, repr(n)), self.which_args)
+    def __call__(self, instead):
+        return Predicate(lambda x: instead, repr(instead))
 
 P = Predicate()
 

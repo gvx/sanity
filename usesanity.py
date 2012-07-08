@@ -95,3 +95,10 @@ def a8(x) -> P > _.x:
 
 print(a8(2))
 #print(a8(0))
+
+@sane
+def a9(x: Len(P([1, 2, 3])) == P):
+	return x
+
+print(a9(3))
+#print(a9(2))
