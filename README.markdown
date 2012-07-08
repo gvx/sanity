@@ -84,16 +84,10 @@ print(tail())
 # ValueError: precondition (len(())) > 0 failed
 ```
 
-# Future work
-
-## Multiple predicates
-
-More importantly, I want to be able to do things like this:
-
 ```python
 @sane
-def pos_sub(a: P > P('b'), b):
-    # or: P('a') > P('b')
+def pos_sub(a: P > Predicate.b, b):
+    # or: Predicate.a > Predicate.b
     return a - b
 ```
 
